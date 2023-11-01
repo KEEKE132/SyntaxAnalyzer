@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
 	else {
 		getChar();
 		do {
-			lex();
+			lexical();
 		} while (nextToken != EOF);
 	}
 	return 0;

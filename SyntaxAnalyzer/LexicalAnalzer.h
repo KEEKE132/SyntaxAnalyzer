@@ -6,4 +6,4 @@ int lookup(char);
 void addChar();
 void getChar();
 void getNonBlank();
-int lex();
+int lexical();

@@ -94,7 +94,7 @@ void getNonBlank() {
 	}
 }
 
-int lex() {
+int lexical() {
 	lexLen = 0;
 	lexeme.clear();
 	getNonBlank();
@@ -127,5 +127,6 @@ int lex() {
 		break;
 	}
 	cout << lexeme << endl;
+	token_string = lexeme;
 	return nextToken;
 }
