@@ -15,7 +15,7 @@
 #define DIV_OP 24
 #define LEFT_PAREN 25
 #define RIGHT_PAREN 26
-#define COLON 27
+#define SEMICOLON 27
 
 using namespace std;
 
@@ -54,13 +54,25 @@ int lookup(char ch) {
 		addChar();
 		nextToken = DIV_OP;
 		break;
-	case '=':
+	case ':':
 		addChar();
-		nextToken = ASSIGN_OP;
+		getChar();
+		if (nextChar == '=') {
+			addChar();
+			nextToken = ASSIGN_OP;
+		}
+		else {
+			cout << "Wrong ASSIGNMENT OP Insert '='" << endl;
+		}
+		break;
+	case '=':
+		cout << "Wrong ASSIGNMENT OP Insert ':'" << endl;
+		lexeme.push_back(':');
+		addChar();
 		break;
 	case ';':
 		addChar();
-		nextToken = COLON;
+		nextToken = SEMICOLON;
 		break;
 	default:
 		addChar();

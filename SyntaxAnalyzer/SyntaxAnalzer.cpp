@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <vector>
 #include "LexicalAnalzer.h"
 #include "SyntaxAnalzer.h"
 
@@ -28,14 +29,15 @@ typedef struct id {
 	int value;
 }id;
 
-id* ids[100];
+vector<id*> ids;
 int idCount = 0;
+int targetid = 0;
 
 void lookupSyntax() {
+    stat();
 	if (nextToken == SEMICOLON) {
 		lexical();
 	}
-    stat();
 }
 
 int findValue(string data) {
@@ -53,20 +55,31 @@ int findValue(string data) {
     }
     else {
         cout << "wrong input return 0";
+        return 0;
     }
 }
 
 void stat() {
-	lexical();
 	iden(token_string);
     lexical();
+    if (nextToken != ASSIGN_OP) {
+        cout << "error" << endl;
+    }
     lexical();
-	cout<<expr();
+    ids[targetid]->value = expr();
 }
 
 void iden(string na) {
-	ids[idCount] = new id;
+    for (int i = 0; i<ids.size() ; i++) {
+        if (ids[i]->name == na) {
+            targetid = i;
+            return;
+        }
+    }
+    ids.push_back(new id);
     ids[idCount]->name = na;
+    targetid = idCount;
+    idCount++;
 }
 
 int expr() {
@@ -103,14 +116,12 @@ int factor() {
         return temp;
     }
     
-    else if (nextToken == IDENT) { 
-        iden(token_string); 
+    else if (nextToken == IDENT) {  
         int temp = findValue(token_string);
         lexical();
         return temp;
     }
     else { // CONST
-        cout << token_string<<endl;
         int temp = findValue(token_string);
         lexical();
         return temp;
