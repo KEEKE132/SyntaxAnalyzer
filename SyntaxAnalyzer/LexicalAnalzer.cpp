@@ -15,6 +15,7 @@
 #define DIV_OP 24
 #define LEFT_PAREN 25
 #define RIGHT_PAREN 26
+#define COLON 27
 
 using namespace std;
 
@@ -57,6 +58,10 @@ int lookup(char ch) {
 		addChar();
 		nextToken = ASSIGN_OP;
 		break;
+	case ';':
+		addChar();
+		nextToken = COLON;
+		break;
 	default:
 		addChar();
 		nextToken = EOF;
@@ -95,6 +100,9 @@ void getNonBlank() {
 }
 
 int lexical() {
+	if (nextToken == EOF) {
+		return EOF;
+	}
 	lexLen = 0;
 	lexeme.clear();
 	getNonBlank();
@@ -126,7 +134,6 @@ int lexical() {
 		lexeme.append("EOF");
 		break;
 	}
-	cout << lexeme << endl;
 	token_string = lexeme;
 	return nextToken;
 }

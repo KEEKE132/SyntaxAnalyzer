@@ -1,1 +1,6 @@
-IDENT1 = 3 + 2
+IDENT1 = 3;
+IDENT2 = IDENT1 * 2
+
+
+IDENT1 = 3;
+IDENT2 = 6;

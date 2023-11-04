@@ -129,9 +129,11 @@
   <ItemGroup>
     <ClCompile Include="LexicalAnalzer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SyntaxAnalzer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LexicalAnalzer.h" />
+    <ClInclude Include="SyntaxAnalzer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "LexicalAnalzer.h"
+#include "SyntaxAnalzer.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ int main(int argc, char* argv[]) {
 	else {
 		getChar();
 		do {
-			lexical();
+			lookupSyntax();
 		} while (nextToken != EOF);
 	}
 	return 0;
