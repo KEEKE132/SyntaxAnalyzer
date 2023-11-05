@@ -11,3 +11,4 @@ int term_tail();
 int factor_tail();
 void lookupSyntax();
 void iden(string);
+void error(string);

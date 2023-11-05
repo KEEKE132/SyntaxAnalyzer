@@ -143,7 +143,7 @@ int lexical() {
 		break;
 	case EOF:
 		nextToken = EOF;
-		lexeme.append("EOF");
+		lexeme.append(" ");
 		break;
 	}
 	token_string = lexeme;
