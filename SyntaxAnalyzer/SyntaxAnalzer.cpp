@@ -26,7 +26,7 @@ extern string token_string;
 
 typedef struct id {
 	string name;
-	int value;
+    float value;
     bool unknown = true;
 }id;
 
@@ -50,42 +50,52 @@ void lookupSyntax() {
 	if (nextToken == SEMICOLON) {
 		lexical();
 	}
+    else if (nextToken != SEMICOLON && nextToken != EOF) {
+        warning("Semicolon이 없음 -> 삽입후 진행");
+        cout << ";";
+    }
 }
 
-int findValue(string data) {
+float findValue(string data) {
     if (isalpha(data[0])) {
         for (id* k : ids ){
             if (k->name == data) {
                 return k->value;
             }
         }
-        warnMesaage.append("값이 존재하지 않은 식별자 -> 0으로 대체");
+        cout << token_string;
+        lexical();
+        error("값이 존재하지 않은 식별자:" + data);
         return 0;
     }
     else if (all_of(data.begin(), data.end(), isdigit)) {
         return stoi(data);
     }
     else {
-        warnMesaage.append("잘못된 요소 -> 0으로 대체");
+        cout << token_string;
+        lexical();
+        error("잘못된 요소:" + data);
         return 0;
     }
 }
 
 void stat() {
+    if (nextToken != IDENT) {
+        error("각 문장의 시작은 ID여야함");
+    }
 	iden(token_string);
     cout << token_string;
     IDnum++;
     lexical();
     OPnum++;
     if (nextToken != ASSIGN_OP) {
-        warnMesaage.append("ASSIGN Operation이 존재하지않음 -> 삽입 후 진행");
-        cout << ":=(W)" << endl;
+        warning("ASSIGN Operation이 존재하지않음 -> 삽입 후 진행; ");
+        cout << ":=";
     }
     else {
         cout << token_string;
         lexical();
     }
-    cout << token_string;
     ids[targetid]->value = expr();
     ids[targetid]->unknown = false;
 }
@@ -103,42 +113,42 @@ void iden(string na) {
     idCount++;
 }
 
-int expr() {
+float expr() {
     return term()+term_tail();
 }
 
-int term() {
+float term() {
     return factor() * factor_tail();
 }
 
 
-int term_tail() {
-    int temp = 0;
+float term_tail() {
+    float temp = 0;
     if (nextToken == ADD_OP) { 
         OPnum++;
-        lexical();
         cout << token_string;
+        lexical();
         temp+=term();
         temp+=term_tail();
     }
     else if (nextToken == SUB_OP) {
         OPnum++;
-        lexical();
         cout << token_string;
+        lexical();
         temp -= term();
         temp -= term_tail();
     }
     return temp;
 }
 
-int factor() {
+float factor() {
     if (nextToken == LEFT_PAREN) {
-        lexical();
         cout << token_string;
-        int temp = expr();
+        lexical();
+        float temp = expr();
         if (nextToken == RIGHT_PAREN) {
-            lexical();
             cout << token_string;
+            lexical();
         }
         else {
             error("RIGHT_PAREN이 없음");
@@ -148,34 +158,53 @@ int factor() {
     
     else if (nextToken == IDENT) {  
         IDnum++;
-        int temp = findValue(token_string);
-        lexical();
+        float temp = findValue(token_string);
         cout << token_string;
+        lexical();
         return temp;
     }
     else if(nextToken == INT_LIT){
         CONSTnum++;
-        int temp = findValue(token_string);
-        lexical();
+        float temp = findValue(token_string);
         cout << token_string;
+        lexical();
         return temp;
     }
+    else if (nextToken == EOF) {
+        error("완성되지 않은 문장");
+    }
     else {
-        warnMesaage.append("잘못된 요소(" + token_string + ") -> 제거후 진행");
+        warning("잘못된 요소(" + token_string + ") -> 제거후 진행; ");
+        cout << token_string;
+        lexical();
+        factor();
     }
 }
 
-int factor_tail() {
-    int temp = 1;
+float factor_tail() {
+    float temp = 1;
+    float divOperand=1;
     if (nextToken == MULT_OP) {
         OPnum++;
-        lexical();
         cout << token_string;
+        lexical();
         temp *= factor();
         temp *= factor_tail();
     }
     else if (nextToken == DIV_OP) {
         OPnum++;
+        cout << token_string;
+        lexical();
+        temp *= 100000;
+        divOperand = factor();
+        if (divOperand != 0) {
+            temp /= divOperand;
+        }
+        else {
+            warning("나눗셈 Operand가 0입니다 -> 1로 대체후 진행; ");
+        }
+        temp /= factor_tail();
+        temp /= 100000;
     }
     return temp;
 }
@@ -199,4 +228,9 @@ void error(string message) {
     throw message;
 }
 
-//해결과제: 나눗셈, Warn, error 세분화적용
+void warning(string message) {
+    warnMesaage.append(message);
+    isWarn = true;
+}
+
+//해결과제: Warn, error 세분화적용

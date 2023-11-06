@@ -1,5 +1,6 @@
 #include <iostream>
 #include "LexicalAnalzer.h"
+#include "SyntaxAnalzer.h"
 #include <string>
 #include <fstream>
 
@@ -66,9 +67,12 @@ int lookup(char ch) {
 		}
 		break;
 	case '=':
-		cout << "Wrong ASSIGNMENT OP Insert ':'" << endl;
+		warning("잘못된 Assignment OP(=) -> := 으로 대체");
 		lexeme.push_back(':');
+		lexLen++;
 		addChar();
+		getChar();
+		nextToken = ASSIGN_OP;
 		break;
 	case ';':
 		addChar();
@@ -76,7 +80,7 @@ int lookup(char ch) {
 		break;
 	default:
 		addChar();
-		nextToken = EOF;
+		nextToken = UNKNOWN;
 		break;
 	}
 	return nextToken;

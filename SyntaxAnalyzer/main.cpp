@@ -15,7 +15,7 @@ extern string warnMesaage;
 
 typedef struct id {
 	string name;
-	int value;
+	float value;
 	bool unknown;
 }id;
 extern vector<id*> ids;
@@ -35,14 +35,18 @@ int main(int argc, char* argv[]) {
 				cout << endl;
 			}
 			catch (string message) {
-				cout << endl << "(ERROR) " << message;
+				cout << endl;
+				if (isWarn) {
+					cout << "(Warning)" << warnMesaage << "; ";
+				}
+				cout << "(ERROR) " << message;
 			}
 			
 			if (isWarn && !isError) {
-				cout << endl;
+				cout << "(Warning)" << warnMesaage;
 			}
 			else if (!isWarn && !isError) {
-				cout << endl << "(OK)";
+				cout << "(OK)";
 			}
 			cout << endl << "ID: " << IDnum << "; CONST: " << CONSTnum << "; OP: " << OPnum << ";";
 			cout << endl;
@@ -51,7 +55,7 @@ int main(int argc, char* argv[]) {
 	cout << "Result -=> ";
 	for (id* k : ids) {
 		if (!k->unknown)
-			cout << k->name << ":" << k->value << "; ";
+			cout << k->name << ":" << ((int)(k->value*100))/(float)100 << "; ";
 		else {
 			cout << k->name << ": UNKNOWN; ";
 		}

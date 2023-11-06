@@ -4,11 +4,12 @@
 using namespace std;
 
 void stat();
-int expr();
-int term();
-int factor();
-int term_tail();
-int factor_tail();
+float expr();
+float term();
+float factor();
+float term_tail();
+float factor_tail();
 void lookupSyntax();
 void iden(string);
 void error(string);
+void warning(string);
