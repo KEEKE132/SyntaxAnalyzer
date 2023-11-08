@@ -1,6 +1,6 @@
 #include <iostream>
-#include "LexicalAnalzer.h"
-#include "SyntaxAnalzer.h"
+#include "LexicalAnalyzer.h"
+#include "SyntaxAnalyzer.h"
 #include <string>
 #include <fstream>
 
@@ -45,7 +45,17 @@ int lookup(char ch) {
 		break;
 	case '-':
 		addChar();
-		nextToken = SUB_OP;
+		getChar();
+		if (charClass == DIGIT) {
+			while (charClass == DIGIT) {
+				addChar();
+				getChar();
+			}
+			nextToken = INT_LIT;
+		}
+		else {
+			nextToken = SUB_OP;
+		}
 		break;
 	case '*':
 		addChar();
@@ -63,7 +73,10 @@ int lookup(char ch) {
 			nextToken = ASSIGN_OP;
 		}
 		else {
-			cout << "Wrong ASSIGNMENT OP Insert '='" << endl;
+			warning("잘못된 Assignment OP(:) -> := 으로 대체");
+			lexeme.push_back('=');
+			lexLen++;
+			nextToken = ASSIGN_OP;
 		}
 		break;
 	case '=':
@@ -112,6 +125,10 @@ void getChar() {
 void getNonBlank() {
 	while (nextChar <= 32) {
 		getChar();
+		if (charClass == EOF) {
+			nextToken = EOF;
+			return;
+		}
 	}
 }
 

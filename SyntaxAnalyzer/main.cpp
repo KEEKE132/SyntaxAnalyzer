@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "LexicalAnalzer.h"
-#include "SyntaxAnalzer.h"
+#include "LexicalAnalyzer.h"
+#include "SyntaxAnalyzer.h"
 
 using namespace std;
 
@@ -21,10 +21,11 @@ typedef struct id {
 extern vector<id*> ids;
 
 int main(int argc, char* argv[]) {
-	//string filename = argv[1];
-	file.open("test.txt");
+	string filename = argv[1];
+	file.open(filename);
 	if (!file.is_open()) {
 		cout << "ERROR - file is not open" << endl;
+		return 0;
 	}
 	else {
 		getChar();

@@ -2,8 +2,8 @@
 #include <string>
 #include <algorithm>
 #include <vector>
-#include "LexicalAnalzer.h"
-#include "SyntaxAnalzer.h"
+#include "LexicalAnalyzer.h"
+#include "SyntaxAnalyzer.h"
 
 using namespace std;
 
@@ -70,14 +70,8 @@ float findValue(string data) {
         error("값이 존재하지 않은 식별자:" + data);
         return 0;
     }
-    else if (all_of(data.begin(), data.end(), isdigit)) {
-        return stoi(data);
-    }
     else {
-        cout << token_string;
-        lexical();
-        error("잘못된 요소:" + data);
-        return 0;
+        return stoi(data);
     }
 }
 
@@ -246,5 +240,3 @@ void warning(string message) {
     warnMesaage.append(message);
     isWarn = true;
 }
-
-//해결과제: Warn, error 세분화적용

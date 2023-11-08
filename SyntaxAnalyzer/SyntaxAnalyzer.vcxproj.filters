@@ -18,18 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LexicalAnalzer.cpp">
+    <ClCompile Include="LexicalAnalyzer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SyntaxAnalzer.cpp">
+    <ClCompile Include="SyntaxAnalyzer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LexicalAnalzer.h">
+    <ClInclude Include="LexicalAnalyzer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SyntaxAnalzer.h">
+    <ClInclude Include="SyntaxAnalyzer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

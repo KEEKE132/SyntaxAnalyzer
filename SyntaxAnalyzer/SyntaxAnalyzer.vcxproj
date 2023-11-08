@@ -127,13 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LexicalAnalzer.cpp" />
+    <ClCompile Include="LexicalAnalyzer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SyntaxAnalzer.cpp" />
+    <ClCompile Include="SyntaxAnalyzer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LexicalAnalzer.h" />
-    <ClInclude Include="SyntaxAnalzer.h" />
+    <ClInclude Include="LexicalAnalyzer.h" />
+    <ClInclude Include="SyntaxAnalyzer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="test.txt" />
